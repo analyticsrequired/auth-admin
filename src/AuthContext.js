@@ -5,7 +5,7 @@ const localStorageKey = "ar_auth_token";
 
 export const AuthContext = createContext();
 
-export function AuthProvider({ tokenUrl, children }) {
+export function AuthProvider({ tokenUrl, registerUrl, children }) {
   const [state, setState] = useState(
     window.localStorage.getItem(localStorageKey)
   );
@@ -37,6 +37,25 @@ export function AuthProvider({ tokenUrl, children }) {
     setState(token);
   };
 
+  const register = async (inviteToken, password) => {
+    const response = await fetch(registerUrl, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${inviteToken}`
+      },
+      body: JSON.stringify({
+        password
+      })
+    });
+
+    if (response.status === 201) {
+      const payload = jwtDecode(inviteToken);
+      login(payload.id, password);
+    }
+  };
+
   const logout = () => {
     window.localStorage.removeItem(localStorageKey);
     setState(null);
@@ -45,7 +64,9 @@ export function AuthProvider({ tokenUrl, children }) {
   const user = state ? jwtDecode(state) : null;
 
   return (
-    <AuthContext.Provider value={{ token: state, user, login, logout }}>
+    <AuthContext.Provider
+      value={{ token: state, user, login, register, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

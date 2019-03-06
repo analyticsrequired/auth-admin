@@ -2,20 +2,20 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { Form, Message, Input, Button } from "semantic-ui-react";
 
-export default function LoginForm() {
+export default function RegistrationForm() {
   const auth = useContext(AuthContext);
 
-  const [username, setUsername] = useState("");
+  const [token, setToken] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState();
 
   async function onSubmit(e) {
     e.preventDefault();
     try {
-      await auth.login(username, password, setError);
+      await auth.register(token, password);
     } catch (e) {
       setError(e.message);
-      setUsername("");
+      setToken("");
       setPassword("");
     }
   }
@@ -29,13 +29,13 @@ export default function LoginForm() {
       <Form.Field>
         <Input
           type="text"
-          label="Username"
-          value={username}
-          autoFocus
+          label="Invitation"
+          value={token}
           required
-          onChange={onChange(setUsername)}
+          onChange={onChange(setToken)}
         />
       </Form.Field>
+
       <Form.Field>
         <Input
           type="password"
@@ -46,7 +46,7 @@ export default function LoginForm() {
         />
       </Form.Field>
 
-      <Button>Login</Button>
+      <Button>Register</Button>
     </Form>
   );
 }

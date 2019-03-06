@@ -6,10 +6,10 @@ import { AuthProvider } from "./AuthContext";
 import * as serviceWorker from "./serviceWorker";
 import "semantic-ui-css/semantic.min.css";
 import { Container } from "semantic-ui-react";
-import { authTokenUrl } from "./config";
+import { authTokenUrl, authRegisterUrl } from "./config";
 
 ReactDOM.render(
-  <AuthProvider tokenUrl={authTokenUrl}>
+  <AuthProvider tokenUrl={authTokenUrl} registerUrl={authRegisterUrl}>
     <Container style={{ marginTop: "2em" }}>
       <App />
     </Container>

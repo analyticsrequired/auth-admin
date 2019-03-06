@@ -1,10 +1,14 @@
 import React, { createContext, useState } from "react";
 import jwtDecode from "jwt-decode";
 
+const localStorageKey = "ar_auth_token";
+
 export const AuthContext = createContext();
 
 export function AuthProvider({ tokenUrl, children }) {
-  const [state, setState] = useState();
+  const [state, setState] = useState(
+    window.localStorage.getItem(localStorageKey)
+  );
 
   const login = async (username, password) => {
     const response = await fetch(tokenUrl, {
@@ -23,10 +27,14 @@ export function AuthProvider({ tokenUrl, children }) {
 
     const token = await response.text();
 
+    window.localStorage.setItem(localStorageKey, token);
     setState(token);
   };
 
-  const logout = () => setState(null);
+  const logout = () => {
+    window.localStorage.removeItem(localStorageKey);
+    setState(null);
+  };
 
   const user = state ? jwtDecode(state) : null;
 

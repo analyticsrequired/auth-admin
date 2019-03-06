@@ -3,12 +3,15 @@ import { AuthContext } from "./AuthContext";
 
 export default function LoginForm() {
   const auth = useContext(AuthContext);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   function onSubmit(e) {
     e.preventDefault();
     auth.login(username, password);
   }
+
   return (
     <form onSubmit={onSubmit}>
       <div>

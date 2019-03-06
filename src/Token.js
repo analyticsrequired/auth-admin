@@ -3,10 +3,12 @@ import { AuthContext } from "./AuthContext";
 
 export default function Token() {
   const auth = useContext(AuthContext);
+
   function onClick(e) {
     e.preventDefault();
     auth.logout();
   }
+
   return (
     <Fragment>
       <table>

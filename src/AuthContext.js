@@ -23,7 +23,13 @@ export function AuthProvider({ tokenUrl, children }) {
       })
     });
 
-    if (response.status !== 201) return;
+    if (response.status === 401) {
+      throw new Error("Invalid username or password");
+    }
+
+    if (response.status !== 201) {
+      throw new Error("An error occurred while authenticating");
+    }
 
     const token = await response.text();
 

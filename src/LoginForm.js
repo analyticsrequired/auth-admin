@@ -7,17 +7,29 @@ export default function LoginForm() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState();
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault();
-    auth.login(username, password);
+    try {
+      await auth.login(username, password, setError);
+    } catch (e) {
+      setError(e.message);
+      setUsername("");
+      setPassword("");
+    }
   }
 
   return (
     <Form onSubmit={onSubmit}>
-      <Message>
-        <p>Please login</p>
-      </Message>
+      {error ? (
+        <Message negative>{error}</Message>
+      ) : (
+        <Message>
+          <p>Please login</p>
+        </Message>
+      )}
+
       <Form.Field>
         <Input
           type="text"

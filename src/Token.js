@@ -23,7 +23,7 @@ export default function Token() {
           </tr>
           <tr>
             <th>Permissions</th>
-            <td>{auth.user.permissions}</td>
+            <td>{auth.user.permissions.join(", ")}</td>
           </tr>
         </tbody>
       </table>

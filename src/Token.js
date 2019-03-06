@@ -29,7 +29,7 @@ export default function Token() {
               </td>
             </tr>
             <tr>
-              <th>User</th>
+              <th>Username</th>
               <td>{auth.user.id}</td>
             </tr>
             <tr>

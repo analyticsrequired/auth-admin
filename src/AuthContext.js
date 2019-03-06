@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+import jwtDecode from "jwt-decode";
 
 export const AuthContext = createContext();
 
@@ -27,8 +28,10 @@ export function AuthProvider(props) {
 
   const logout = () => setState(null);
 
+  const user = state ? jwtDecode(state) : null;
+
   return (
-    <AuthContext.Provider value={{ token: state, login, logout }}>
+    <AuthContext.Provider value={{ token: state, user, login, logout }}>
       {props.children}
     </AuthContext.Provider>
   );

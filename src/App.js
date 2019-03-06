@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import "./App.css";
 import { AuthContext } from "./AuthContext";
-import LoginForm from "./LoginForm";
-import Token from "./Token";
+import LoggedIn from "./LoggedIn";
+import NotLoggedIn from "./NotLoggedIn";
 
 function App() {
   const auth = useContext(AuthContext);
-  return auth.token ? <Token /> : <LoginForm />;
+  return auth.token ? <LoggedIn /> : <NotLoggedIn />;
 }
 
 export default App;

@@ -12,18 +12,20 @@ export default function Token() {
   return (
     <Fragment>
       <table>
-        <tr>
-          <th>Token</th>
-          <td>{auth.token}</td>
-        </tr>
-        <tr>
-          <th>User</th>
-          <td>{auth.user.id}</td>
-        </tr>
-        <tr>
-          <th>Permissions</th>
-          <td>{auth.user.permissions}</td>
-        </tr>
+        <tbody>
+          <tr>
+            <th>Token</th>
+            <td>{auth.token}</td>
+          </tr>
+          <tr>
+            <th>User</th>
+            <td>{auth.user.id}</td>
+          </tr>
+          <tr>
+            <th>Permissions</th>
+            <td>{auth.user.permissions}</td>
+          </tr>
+        </tbody>
       </table>
 
       <button onClick={onClick}>Logout</button>

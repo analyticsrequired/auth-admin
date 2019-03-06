@@ -20,6 +20,8 @@ export default function LoginForm() {
     }
   }
 
+  const onChange = updateFn => e => updateFn(e.target.value);
+
   return (
     <Form onSubmit={onSubmit}>
       {error ? (
@@ -34,19 +36,19 @@ export default function LoginForm() {
         <Input
           type="text"
           label="Username"
-          id="username"
           value={username}
           autoFocus
-          onChange={e => setUsername(e.target.value)}
+          required
+          onChange={onChange(setUsername)}
         />
       </Form.Field>
       <Form.Field>
         <Input
           type="password"
           label="Password"
-          id="password"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          required
+          onChange={onChange(setPassword)}
         />
       </Form.Field>
 

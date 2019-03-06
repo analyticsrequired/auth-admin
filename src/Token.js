@@ -1,4 +1,5 @@
 import React, { useContext, Fragment } from "react";
+import styled from "styled-components";
 import { AuthContext } from "./AuthContext";
 
 export default function Token() {
@@ -11,11 +12,19 @@ export default function Token() {
 
   return (
     <Fragment>
-      <table>
+      <Table>
         <tbody>
           <tr>
             <th>Token</th>
-            <td>{auth.token}</td>
+            <td>
+              <TokenString>{auth.token}</TokenString>
+            </td>
+          </tr>
+          <tr>
+            <th>Authorization Header</th>
+            <td>
+              <TokenString>JWT {auth.token}</TokenString>
+            </td>
           </tr>
           <tr>
             <th>User</th>
@@ -26,9 +35,23 @@ export default function Token() {
             <td>{auth.user.permissions.join(", ")}</td>
           </tr>
         </tbody>
-      </table>
+      </Table>
+
+      <hr />
 
       <button onClick={onClick}>Logout</button>
     </Fragment>
   );
 }
+
+const Table = styled.table`
+  width: 100%;
+  text-align: left;
+`;
+
+const TokenString = styled.span`
+  padding: 0;
+  margin: 0;
+  border-bottom: 1px dotted #333;
+  font-family: monospace;
+`;

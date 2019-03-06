@@ -3,11 +3,11 @@ import jwtDecode from "jwt-decode";
 
 export const AuthContext = createContext();
 
-export function AuthProvider(props) {
+export function AuthProvider({ tokenUrl, children }) {
   const [state, setState] = useState();
 
   const login = async (username, password) => {
-    const response = await fetch("http://localhost:3001/token", {
+    const response = await fetch(tokenUrl, {
       method: "POST",
       mode: "cors",
       headers: {
@@ -32,7 +32,7 @@ export function AuthProvider(props) {
 
   return (
     <AuthContext.Provider value={{ token: state, user, login, logout }}>
-      {props.children}
+      {children}
     </AuthContext.Provider>
   );
 }

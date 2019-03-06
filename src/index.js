@@ -6,7 +6,7 @@ import { AuthProvider } from "./AuthContext";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
-  <AuthProvider>
+  <AuthProvider tokenUrl="http://localhost:3001/token">
     <App />
   </AuthProvider>,
   document.getElementById("root")

@@ -1,6 +1,7 @@
 import React, { useContext, Fragment } from "react";
 import styled from "styled-components";
 import { AuthContext } from "./AuthContext";
+import { Button } from "semantic-ui-react";
 
 export default function Token() {
   const auth = useContext(AuthContext);
@@ -39,7 +40,7 @@ export default function Token() {
 
       <hr />
 
-      <button onClick={onClick}>Logout</button>
+      <Button onClick={onClick}>Logout</Button>
     </Fragment>
   );
 }

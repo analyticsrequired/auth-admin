@@ -4,10 +4,14 @@ import "./index.css";
 import App from "./App";
 import { AuthProvider } from "./AuthContext";
 import * as serviceWorker from "./serviceWorker";
+import "semantic-ui-css/semantic.min.css";
+import { Container } from "semantic-ui-react";
 
 ReactDOM.render(
   <AuthProvider tokenUrl="http://localhost:3001/token">
-    <App />
+    <Container style={{ marginTop: "2em" }}>
+      <App />
+    </Container>
   </AuthProvider>,
   document.getElementById("root")
 );

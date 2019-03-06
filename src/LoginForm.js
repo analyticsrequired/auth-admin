@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
+import { Form, Message, Input, Button } from "semantic-ui-react";
 
 export default function LoginForm() {
   const auth = useContext(AuthContext);
@@ -13,27 +14,31 @@ export default function LoginForm() {
   }
 
   return (
-    <form onSubmit={onSubmit}>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
+    <Form onSubmit={onSubmit}>
+      <Message>
+        <p>Please login</p>
+      </Message>
+      <Form.Field>
+        <Input
           type="text"
+          label="Username"
           id="username"
           value={username}
+          autoFocus
           onChange={e => setUsername(e.target.value)}
         />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
+      </Form.Field>
+      <Form.Field>
+        <Input
           type="password"
+          label="Password"
           id="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
-      </div>
+      </Form.Field>
 
-      <button>Login</button>
-    </form>
+      <Button>Login</Button>
+    </Form>
   );
 }

@@ -13,13 +13,13 @@ export default function Token() {
         <Table>
           <tbody>
             <tr>
-              <th>Token</th>
+              <th style={{ verticalAlign: "top" }}>Token</th>
               <td>
                 <TokenString>{auth.token}</TokenString>
               </td>
             </tr>
             <tr>
-              <th>Authorization Header</th>
+              <th style={{ verticalAlign: "top" }}>Authorization Header</th>
               <td>
                 <TokenString>JWT {auth.token}</TokenString>
               </td>

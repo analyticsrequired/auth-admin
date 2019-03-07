@@ -1,15 +1,11 @@
 import React, { useContext, Fragment } from "react";
 import styled from "styled-components";
 import { AuthContext } from "./AuthContext";
-import { Button, Segment } from "semantic-ui-react";
+import { Segment } from "semantic-ui-react";
+import LogoutButton from "./LogoutButton";
 
 export default function Token() {
   const auth = useContext(AuthContext);
-
-  function onClick(e) {
-    e.preventDefault();
-    auth.logout();
-  }
 
   return (
     <Fragment>
@@ -40,7 +36,7 @@ export default function Token() {
         </Table>
       </Segment>
 
-      <Button onClick={onClick}>Logout</Button>
+      <LogoutButton />
     </Fragment>
   );
 }

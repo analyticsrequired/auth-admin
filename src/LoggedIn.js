@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { AuthContext } from "./AuthContext";
 import { Segment, Label, Header } from "semantic-ui-react";
 import LogoutButton from "./LogoutButton";
+import AdminTools from "./AdminTools";
 
 export default function Token() {
   const auth = useContext(AuthContext);
@@ -41,9 +42,10 @@ export default function Token() {
             </tr>
           </tbody>
         </Table>
+        <LogoutButton />
       </Segment>
 
-      <LogoutButton />
+      <AdminTools />
     </Fragment>
   );
 }

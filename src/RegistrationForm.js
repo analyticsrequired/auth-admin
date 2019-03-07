@@ -8,12 +8,16 @@ export default function RegistrationForm() {
   const [token, setToken] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
 
   async function onSubmit(e) {
     e.preventDefault();
     try {
+      setLoading(true);
       await auth.register(token, password);
+      setLoading(false);
     } catch (e) {
+      setLoading(false);
       setError(e.message);
       setToken("");
       setPassword("");
@@ -32,6 +36,7 @@ export default function RegistrationForm() {
           label="Invitation"
           value={token}
           required
+          disabled={loading}
           onChange={onChange(setToken)}
         />
       </Form.Field>
@@ -42,11 +47,12 @@ export default function RegistrationForm() {
           label="Password"
           value={password}
           required
+          disabled={loading}
           onChange={onChange(setPassword)}
         />
       </Form.Field>
 
-      <Button>Register</Button>
+      <Button>{loading ? "Registering..." : "Register"}</Button>
     </Form>
   );
 }

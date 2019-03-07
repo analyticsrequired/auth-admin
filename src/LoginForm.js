@@ -8,12 +8,16 @@ export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
 
   async function onSubmit(e) {
     e.preventDefault();
     try {
+      setLoading(true);
       await auth.login(username, password, setError);
+      setLoading(false);
     } catch (e) {
+      setLoading(false);
       setError(e.message);
       setUsername("");
       setPassword("");
@@ -33,6 +37,7 @@ export default function LoginForm() {
           value={username}
           autoFocus
           required
+          disabled={loading}
           onChange={onChange(setUsername)}
         />
       </Form.Field>
@@ -42,11 +47,12 @@ export default function LoginForm() {
           label="Password"
           value={password}
           required
+          disabled={loading}
           onChange={onChange(setPassword)}
         />
       </Form.Field>
 
-      <Button>Login</Button>
+      <Button>{loading ? "Logging in..." : "Login"}</Button>
     </Form>
   );
 }

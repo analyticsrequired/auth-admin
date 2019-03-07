@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { AuthContext } from "./AuthContext";
 import { Segment, Label, Header, Divider } from "semantic-ui-react";
 import LogoutButton from "./LogoutButton";
+import TokenString from "./TokenString";
 
 export default function UserTools() {
   const auth = useContext(AuthContext);
@@ -51,11 +52,4 @@ export default function UserTools() {
 const Table = styled.table`
   width: 100%;
   text-align: left;
-`;
-
-const TokenString = styled.span`
-  padding: 0;
-  margin: 0;
-  font-family: monospace;
-  word-break: break-all;
 `;

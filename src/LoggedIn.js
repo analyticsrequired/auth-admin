@@ -1,7 +1,7 @@
 import React, { useContext, Fragment } from "react";
 import styled from "styled-components";
 import { AuthContext } from "./AuthContext";
-import { Segment } from "semantic-ui-react";
+import { Segment, Label, Header } from "semantic-ui-react";
 import LogoutButton from "./LogoutButton";
 
 export default function Token() {
@@ -10,6 +10,27 @@ export default function Token() {
   return (
     <Fragment>
       <Segment>
+        <Header as="h2">User</Header>
+        <Table>
+          <tbody>
+            <tr>
+              <th>Id</th>
+              <th>Permissions</th>
+            </tr>
+            <tr>
+              <td>{auth.user.id}</td>
+              <td>
+                {auth.user.permissions.map(permission => (
+                  <Label>{permission}</Label>
+                ))}
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </Segment>
+
+      <Segment>
+        <Header as="h2">Session</Header>
         <Table>
           <tbody>
             <tr>
@@ -17,20 +38,6 @@ export default function Token() {
               <td>
                 <TokenString>{auth.token}</TokenString>
               </td>
-            </tr>
-            <tr>
-              <th style={{ verticalAlign: "top" }}>Authorization Header</th>
-              <td>
-                <TokenString>JWT {auth.token}</TokenString>
-              </td>
-            </tr>
-            <tr>
-              <th>Username</th>
-              <td>{auth.user.id}</td>
-            </tr>
-            <tr>
-              <th>Permissions</th>
-              <td>{auth.user.permissions.join(", ")}</td>
             </tr>
           </tbody>
         </Table>

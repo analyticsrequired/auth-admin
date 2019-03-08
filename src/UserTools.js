@@ -19,7 +19,7 @@ export default function UserTools() {
               <th>Permissions</th>
             </tr>
             <tr>
-              <td>{auth.user.id}</td>
+              <td>{auth.user.sub}</td>
               <td>
                 {auth.user.permissions.length
                   ? auth.user.permissions.map(permission => (

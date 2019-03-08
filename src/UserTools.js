@@ -23,7 +23,7 @@ export default function UserTools() {
               <td>
                 {auth.user.permissions.length
                   ? auth.user.permissions.map(permission => (
-                      <Label>{permission}</Label>
+                      <Label key={permission}>{permission}</Label>
                     ))
                   : "-"}
               </td>

@@ -52,12 +52,12 @@ export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
 
     if (response.status === 201) {
       const payload = jwtDecode(inviteToken);
-      login(payload.id, password);
+      login(payload.sub, password);
     }
   };
 
-  const invite = async (id, grant = []) => {
-    const response = await fetch(`${inviteUrl}/${id}`, {
+  const invite = async (sub, grant = []) => {
+    const response = await fetch(`${inviteUrl}/${sub}`, {
       method: "POST",
       mode: "cors",
       headers: {

@@ -10,31 +10,37 @@ export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
     window.localStorage.getItem(localStorageKey)
   );
 
+  const [loginError, setLoginError] = useState();
+
   const login = async (username, password) => {
-    const response = await fetch(tokenUrl, {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        id: username,
-        password
-      })
-    });
+    setLoginError();
+    try {
+      const response = await fetch(tokenUrl, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          id: username,
+          password
+        })
+      });
 
-    if (response.status === 401) {
-      throw new Error("Invalid username or password");
+      if (response.status === 201) {
+        const token = await response.text();
+        window.localStorage.setItem(localStorageKey, token);
+        setToken(token);
+        return;
+      }
+
+      if (response.status === 401)
+        return setLoginError("Invalid username or password");
+
+      setLoginError("Error occurred during login.");
+    } catch (e) {
+      setLoginError("Error occurred during login.");
     }
-
-    if (response.status !== 201) {
-      throw new Error("An error occurred while authenticating");
-    }
-
-    const token = await response.text();
-
-    window.localStorage.setItem(localStorageKey, token);
-    setToken(token);
   };
 
   const register = async (inviteToken, password) => {
@@ -81,7 +87,15 @@ export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
 
   return (
     <AuthContext.Provider
-      value={{ token: token, user, login, register, invite, logout }}
+      value={{
+        token: token,
+        user,
+        login,
+        register,
+        invite,
+        loginError,
+        logout
+      }}
     >
       {children}
     </AuthContext.Provider>

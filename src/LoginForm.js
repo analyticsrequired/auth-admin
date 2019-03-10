@@ -11,14 +11,14 @@ export default function LoginForm() {
 
   async function onSubmit(e) {
     e.preventDefault();
-    try {
-      setLoading(true);
-      await auth.login(username, password);
-    } finally {
-      setLoading(false);
-      setUsername("");
-      setPassword("");
-    }
+
+    setLoading(true);
+
+    await auth.login(username, password);
+
+    setLoading(false);
+    setUsername("");
+    setPassword("");
   }
 
   const onChange = updateFn => e => updateFn(e.target.value);

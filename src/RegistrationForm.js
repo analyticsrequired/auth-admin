@@ -11,15 +11,14 @@ export default function RegistrationForm() {
 
   async function onSubmit(e) {
     e.preventDefault();
-    try {
-      setLoading(true);
-      await auth.register(token, password);
-      setLoading(false);
-    } catch (e) {
-      setLoading(false);
-      setToken("");
-      setPassword("");
-    }
+
+    setLoading(true);
+
+    await auth.register(token, password);
+
+    setLoading(false);
+    setToken("");
+    setPassword("");
   }
 
   const onChange = updateFn => e => updateFn(e.target.value);

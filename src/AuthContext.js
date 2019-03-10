@@ -11,6 +11,7 @@ export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
   );
 
   const [loginError, setLoginError] = useState();
+  const [registrationError, setRegistrationError] = useState();
 
   const login = async (username, password) => {
     setLoginError();
@@ -44,21 +45,33 @@ export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
   };
 
   const register = async (inviteToken, password) => {
-    const response = await fetch(registerUrl, {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `JWT ${inviteToken}`
-      },
-      body: JSON.stringify({
-        password
-      })
-    });
+    setRegistrationError();
 
-    if (response.status === 201) {
-      const payload = jwtDecode(inviteToken);
-      login(payload.sub, password);
+    try {
+      const response = await fetch(registerUrl, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${inviteToken}`
+        },
+        body: JSON.stringify({
+          password
+        })
+      });
+
+      if (response.status === 201) {
+        const payload = jwtDecode(inviteToken);
+        login(payload.sub, password);
+        return;
+      }
+
+      if (response.status === 401)
+        return setRegistrationError("Invalid invitation token");
+
+      setRegistrationError("Error occurred during registration.");
+    } catch (e) {
+      setRegistrationError("Error occurred during registration.");
     }
   };
 
@@ -94,6 +107,7 @@ export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
         register,
         invite,
         loginError,
+        registrationError,
         logout
       }}
     >

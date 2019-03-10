@@ -7,7 +7,6 @@ export default function RegistrationForm() {
 
   const [token, setToken] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(e) {
@@ -18,7 +17,6 @@ export default function RegistrationForm() {
       setLoading(false);
     } catch (e) {
       setLoading(false);
-      setError(e.message);
       setToken("");
       setPassword("");
     }
@@ -28,7 +26,9 @@ export default function RegistrationForm() {
 
   return (
     <Form onSubmit={onSubmit}>
-      {error ? <Message negative>{error}</Message> : null}
+      {auth.registrationError ? (
+        <Message negative>{auth.registrationError}</Message>
+      ) : null}
 
       <Form.Field>
         <Input

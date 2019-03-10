@@ -6,7 +6,7 @@ const localStorageKey = "ar_auth_token";
 export const AuthContext = createContext();
 
 export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
-  const [token, setToken] = useState(
+  const [sessionToken, setSessionToken] = useState(
     window.localStorage.getItem(localStorageKey)
   );
 
@@ -30,7 +30,7 @@ export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
       if (response.status === 201) {
         const token = await response.text();
         window.localStorage.setItem(localStorageKey, token);
-        setToken(token);
+        setSessionToken(token);
         return;
       }
 
@@ -68,7 +68,7 @@ export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `JWT ${token}`
+        Authorization: `JWT ${sessionToken}`
       },
       body: JSON.stringify({ grant })
     });
@@ -80,15 +80,15 @@ export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
 
   const logout = () => {
     window.localStorage.removeItem(localStorageKey);
-    setToken(null);
+    setSessionToken(null);
   };
 
-  const user = token ? jwtDecode(token) : null;
+  const user = sessionToken ? jwtDecode(sessionToken) : null;
 
   return (
     <AuthContext.Provider
       value={{
-        token: token,
+        token: sessionToken,
         user,
         login,
         register,

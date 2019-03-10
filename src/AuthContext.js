@@ -12,6 +12,7 @@ export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
 
   const [loginError, setLoginError] = useState();
   const [registrationError, setRegistrationError] = useState();
+  const [invitationError, setInvitationError] = useState();
 
   const login = async (username, password) => {
     setLoginError();
@@ -76,6 +77,8 @@ export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
   };
 
   const invite = async (sub, grant = []) => {
+    setInvitationError();
+
     const response = await fetch(`${inviteUrl}/${sub}`, {
       method: "POST",
       mode: "cors",
@@ -86,9 +89,17 @@ export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
       body: JSON.stringify({ grant })
     });
 
-    const token = await response.text();
+    if (response.status === 201) {
+      const token = await response.text();
+      return token;
+    }
 
-    return token;
+    if (response.status === 400) {
+      const { error } = await response.json();
+      return setInvitationError(error);
+    }
+
+    setInvitationError("Error occurred during invitation.");
   };
 
   const logout = () => {
@@ -108,6 +119,7 @@ export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
         invite,
         loginError,
         registrationError,
+        invitationError,
         logout
       }}
     >

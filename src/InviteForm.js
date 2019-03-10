@@ -15,28 +15,28 @@ export default function InviteForm() {
 
   const [id, setId] = useState("");
   const [inviteToken, setInviteToken] = useState("");
-  const [error, setError] = useState();
+
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(e) {
     e.preventDefault();
-    try {
-      setLoading(true);
-      const token = await auth.invite(id, []);
-      setInviteToken(token);
-      setLoading(false);
-    } catch (e) {
-      setLoading(false);
-      setError(e.message);
-      setId("");
-    }
+
+    setLoading(true);
+
+    const token = await auth.invite(id, []);
+    setInviteToken(token);
+
+    setLoading(false);
+    setId("");
   }
 
   const onChange = updateFn => e => updateFn(e.target.value);
 
   return (
     <Form onSubmit={onSubmit}>
-      {error ? <Message negative>{error}</Message> : null}
+      {auth.invitationError ? (
+        <Message negative>{auth.invitationError}</Message>
+      ) : null}
 
       <Form.Field>
         <Input

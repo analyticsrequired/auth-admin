@@ -5,17 +5,17 @@ const localStorageKey = "ar_auth_token";
 
 export const AuthContext = createContext();
 
-export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
+export function AuthProvider({ tokenUrl, registerUrl, children }) {
   const [sessionToken, setSessionToken] = useState(
     window.localStorage.getItem(localStorageKey)
   );
 
   const [loginError, setLoginError] = useState();
   const [registrationError, setRegistrationError] = useState();
-  const [invitationError, setInvitationError] = useState();
 
-  const login = async (username, password) => {
+  const login = async (userId, password) => {
     setLoginError();
+
     try {
       const response = await fetch(tokenUrl, {
         method: "POST",
@@ -24,7 +24,7 @@ export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          id: username,
+          userId,
           password
         })
       });
@@ -37,7 +37,7 @@ export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
       }
 
       if (response.status === 401)
-        return setLoginError("Invalid username or password");
+        return setLoginError("Invalid user id or password");
 
       setLoginError("Error occurred during login.");
     } catch (e) {
@@ -45,7 +45,7 @@ export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
     }
   };
 
-  const register = async (inviteToken, password) => {
+  const register = async (userId, password) => {
     setRegistrationError();
 
     try {
@@ -53,53 +53,23 @@ export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
         method: "POST",
         mode: "cors",
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `JWT ${inviteToken}`
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
+          userId,
           password
         })
       });
 
       if (response.status === 201) {
-        const payload = jwtDecode(inviteToken);
-        login(payload.sub, password);
+        login(userId, password);
         return;
       }
-
-      if (response.status === 401)
-        return setRegistrationError("Invalid invitation token");
 
       setRegistrationError("Error occurred during registration.");
     } catch (e) {
       setRegistrationError("Error occurred during registration.");
     }
-  };
-
-  const invite = async (sub, grant = []) => {
-    setInvitationError();
-
-    const response = await fetch(`${inviteUrl}/${sub}`, {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `JWT ${sessionToken}`
-      },
-      body: JSON.stringify({ grant })
-    });
-
-    if (response.status === 201) {
-      const token = await response.text();
-      return token;
-    }
-
-    if (response.status === 400) {
-      const { error } = await response.json();
-      return setInvitationError(error);
-    }
-
-    setInvitationError("Error occurred during invitation.");
   };
 
   const logout = () => {
@@ -116,10 +86,8 @@ export function AuthProvider({ tokenUrl, registerUrl, inviteUrl, children }) {
         user,
         login,
         register,
-        invite,
         loginError,
         registrationError,
-        invitationError,
         logout
       }}
     >

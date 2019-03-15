@@ -5,7 +5,7 @@ import { Form, Message, Input, Button } from "semantic-ui-react";
 export default function RegistrationForm() {
   const auth = useContext(AuthContext);
 
-  const [token, setToken] = useState("");
+  const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -14,10 +14,10 @@ export default function RegistrationForm() {
 
     setLoading(true);
 
-    await auth.register(token, password);
+    await auth.register(userId, password);
 
     setLoading(false);
-    setToken("");
+    setUserId("");
     setPassword("");
   }
 
@@ -32,11 +32,11 @@ export default function RegistrationForm() {
       <Form.Field>
         <Input
           type="text"
-          label="Invitation"
-          value={token}
+          label="User Id"
+          value={userId}
           required
           disabled={loading}
-          onChange={onChange(setToken)}
+          onChange={onChange(setUserId)}
         />
       </Form.Field>
 

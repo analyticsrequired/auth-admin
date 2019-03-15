@@ -5,7 +5,7 @@ import { Form, Message, Input, Button } from "semantic-ui-react";
 export default function LoginForm() {
   const auth = useContext(AuthContext);
 
-  const [username, setUsername] = useState("");
+  const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -14,10 +14,10 @@ export default function LoginForm() {
 
     setLoading(true);
 
-    await auth.login(username, password);
+    await auth.login(userId, password);
 
     setLoading(false);
-    setUsername("");
+    setUserId("");
     setPassword("");
   }
 
@@ -30,12 +30,12 @@ export default function LoginForm() {
       <Form.Field>
         <Input
           type="text"
-          label="Username"
-          value={username}
+          label="User Id"
+          value={userId}
           autoFocus
           required
           disabled={loading}
-          onChange={onChange(setUsername)}
+          onChange={onChange(setUserId)}
         />
       </Form.Field>
       <Form.Field>

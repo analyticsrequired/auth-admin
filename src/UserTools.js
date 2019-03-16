@@ -3,10 +3,15 @@ import styled from "styled-components";
 import { AuthContext } from "./AuthContext";
 import { Segment, Label, Header, Divider } from "semantic-ui-react";
 import LogoutButton from "./LogoutButton";
+import RefreshButton from "./RefreshButton";
 import TokenString from "./TokenString";
 
 export default function UserTools() {
   const auth = useContext(AuthContext);
+
+  if (!auth.user) {
+    return <p>No user</p>;
+  }
 
   return (
     <Fragment>
@@ -37,15 +42,22 @@ export default function UserTools() {
         <Table>
           <tbody>
             <tr>
-              <th style={{ verticalAlign: "top" }}>Token</th>
+              <th style={{ verticalAlign: "top" }}>Refresh Token</th>
               <td>
-                <TokenString>{auth.token}</TokenString>
+                <TokenString>{auth.refreshToken}</TokenString>
+              </td>
+            </tr>
+            <tr>
+              <th style={{ verticalAlign: "top" }}>Access Token</th>
+              <td>
+                <TokenString>{auth.accessToken}</TokenString>
               </td>
             </tr>
           </tbody>
         </Table>
         <Divider hidden />
         <LogoutButton />
+        <RefreshButton />
       </Segment>
     </Fragment>
   );

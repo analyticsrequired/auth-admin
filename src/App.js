@@ -8,10 +8,16 @@ import logo from "./logo.png";
 function App() {
   const auth = useContext(AuthContext);
 
+  const existingRefreshToken = window.localStorage.getItem("ar_refresh_token");
+
+  if (existingRefreshToken) {
+    auth.refresh(existingRefreshToken);
+  }
+
   return (
     <Fragment>
       <img src={logo} alt="Analytics Required" />
-      {auth.token ? <LoggedIn /> : <NotLoggedIn />}
+      {auth.refreshToken ? <LoggedIn /> : <NotLoggedIn />}
     </Fragment>
   );
 }

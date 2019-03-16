@@ -41,13 +41,20 @@ export default function UserTools() {
       <Segment>
         <Header as="h2">Session</Header>
         <Table>
+          <colgroup>
+            <col style={{ width: "50%" }} />
+            <col />
+          </colgroup>
           <tbody>
             <tr>
-              <th style={{ verticalAlign: "top" }}>Access Token</th>
-              <td>
+              <th>Access Token</th>
+              <th style={{ textAlign: "right" }}>Expiration</th>
+            </tr>
+            <tr>
+              <td style={{ verticalAlign: "top" }}>
                 <TokenString>{auth.accessToken}</TokenString>
               </td>
-              <td>
+              <td style={{ verticalAlign: "top", textAlign: "right" }}>
                 <TimeAgo date={auth.user.exp * 1000} />
               </td>
             </tr>

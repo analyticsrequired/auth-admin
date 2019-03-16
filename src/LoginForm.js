@@ -1,23 +1,25 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
-import { Form, Message, Input, Button } from "semantic-ui-react";
+import { LoadingContext } from "./LoadingContext";
+import { Form, Message, Input } from "semantic-ui-react";
 import PrimaryButton from "./PrimaryButton";
 
 export default function LoginForm() {
   const auth = useContext(AuthContext);
+  const loader = useContext(LoadingContext);
 
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
 
   async function onSubmit(e) {
     e.preventDefault();
 
-    setLoading(true);
+    loader.setIsLoading(true);
 
     await auth.login(userId, password);
 
-    setLoading(false);
+    loader.setIsLoading(false);
+
     setUserId("");
     setPassword("");
   }
@@ -35,22 +37,21 @@ export default function LoginForm() {
           value={userId}
           autoFocus
           required
-          disabled={loading}
           onChange={onChange(setUserId)}
         />
       </Form.Field>
+
       <Form.Field>
         <Input
           type="password"
           label="Password"
           value={password}
           required
-          disabled={loading}
           onChange={onChange(setPassword)}
         />
       </Form.Field>
 
-      <PrimaryButton basic>{loading ? "Logging in..." : "Login"}</PrimaryButton>
+      <PrimaryButton basic>Login</PrimaryButton>
     </Form>
   );
 }

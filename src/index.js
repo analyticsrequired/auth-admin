@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import { AuthProvider } from "./AuthContext";
+import { LoadingProvider } from "./LoadingContext";
 import * as serviceWorker from "./serviceWorker";
 import "semantic-ui-css/semantic.min.css";
 import { Container } from "semantic-ui-react";
@@ -14,16 +15,18 @@ import {
 } from "./config";
 
 ReactDOM.render(
-  <AuthProvider
-    tokenUrl={authTokenUrl}
-    registerUrl={authRegisterUrl}
-    refreshUrl={authRefreshUrl}
-    grantUrl={authGrantUrl}
-  >
-    <Container style={{ marginTop: "2em" }}>
-      <App />
-    </Container>
-  </AuthProvider>,
+  <LoadingProvider>
+    <AuthProvider
+      tokenUrl={authTokenUrl}
+      registerUrl={authRegisterUrl}
+      refreshUrl={authRefreshUrl}
+      grantUrl={authGrantUrl}
+    >
+      <Container style={{ marginTop: "2em" }}>
+        <App />
+      </Container>
+    </AuthProvider>
+  </LoadingProvider>,
   document.getElementById("root")
 );
 

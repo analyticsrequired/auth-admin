@@ -26,6 +26,8 @@ export default function GrantForm() {
 
   return (
     <Form onSubmit={onSubmit}>
+      {auth.grantError ? <Message negative>{auth.grantError}</Message> : null}
+
       <Form.Field>
         <Input
           type="text"
@@ -37,6 +39,7 @@ export default function GrantForm() {
           onChange={onChange(setUserId)}
         />
       </Form.Field>
+
       <Form.Field>
         <Input
           type="text"

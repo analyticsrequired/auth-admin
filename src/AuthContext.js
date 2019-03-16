@@ -20,6 +20,7 @@ export function AuthProvider({
 
   const [loginError, setLoginError] = useState();
   const [registrationError, setRegistrationError] = useState();
+  const [grantError, setGrantError] = useState();
 
   const login = async (userId, password) => {
     setLoginError();
@@ -120,18 +121,46 @@ export function AuthProvider({
   };
 
   const grant = async (userId, scope) => {
-    await fetch(grantUrl, {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `JWT ${accessToken}`
-      },
-      body: JSON.stringify({
-        userId,
-        permissions: scope.split(" ")
-      })
-    });
+    setGrantError();
+
+    let response;
+
+    try {
+      response = await fetch(grantUrl, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${accessToken}`
+        },
+        body: JSON.stringify({
+          userId,
+          permissions: scope.split(" ")
+        })
+      });
+    } catch (e) {
+      setGrantError("Error occurred during grant");
+    }
+
+    switch (response.status) {
+      case 201:
+        setGrantError();
+        break;
+
+      case 400:
+        const json = await response.json();
+        const { error } = json;
+        setGrantError(error);
+        break;
+
+      case 403:
+        setGrantError("Forbidden");
+        break;
+
+      default:
+        setGrantError("Unknown error occurred");
+        break;
+    }
   };
 
   const user = accessToken ? jwtDecode(accessToken) : null;
@@ -148,7 +177,8 @@ export function AuthProvider({
         loginError,
         registrationError,
         logout,
-        grant
+        grant,
+        grantError
       }}
     >
       {children}

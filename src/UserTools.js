@@ -43,12 +43,6 @@ export default function UserTools() {
         <Table>
           <tbody>
             <tr>
-              <th style={{ verticalAlign: "top" }}>Refresh Token</th>
-              <td>
-                <TokenString>{auth.refreshToken}</TokenString>
-              </td>
-            </tr>
-            <tr>
               <th style={{ verticalAlign: "top" }}>Access Token</th>
               <td>
                 <TokenString>{auth.accessToken}</TokenString>

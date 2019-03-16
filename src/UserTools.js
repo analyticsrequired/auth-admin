@@ -5,6 +5,7 @@ import { Segment, Label, Header, Divider } from "semantic-ui-react";
 import LogoutButton from "./LogoutButton";
 import RefreshButton from "./RefreshButton";
 import TokenString from "./TokenString";
+import TimeAgo from "react-timeago";
 
 export default function UserTools() {
   const auth = useContext(AuthContext);
@@ -42,15 +43,12 @@ export default function UserTools() {
         <Table>
           <tbody>
             <tr>
-              <th style={{ verticalAlign: "top" }}>Refresh Token</th>
-              <td>
-                <TokenString>{auth.refreshToken}</TokenString>
-              </td>
-            </tr>
-            <tr>
               <th style={{ verticalAlign: "top" }}>Access Token</th>
               <td>
                 <TokenString>{auth.accessToken}</TokenString>
+              </td>
+              <td>
+                <TimeAgo date={auth.user.exp * 1000} />
               </td>
             </tr>
           </tbody>

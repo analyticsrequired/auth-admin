@@ -5,7 +5,13 @@ const localStorageKey = "ar_refresh_token";
 
 export const AuthContext = createContext();
 
-export function AuthProvider({ tokenUrl, registerUrl, refreshUrl, children }) {
+export function AuthProvider({
+  tokenUrl,
+  registerUrl,
+  refreshUrl,
+  grantUrl,
+  children
+}) {
   const [refreshToken, setRefreshToken] = useState(
     window.localStorage.getItem(localStorageKey)
   );
@@ -113,6 +119,21 @@ export function AuthProvider({ tokenUrl, registerUrl, refreshUrl, children }) {
     setRefreshToken(null);
   };
 
+  const grant = async (userId, scope) => {
+    await fetch(grantUrl, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${accessToken}`
+      },
+      body: JSON.stringify({
+        userId,
+        permissions: scope.split(" ")
+      })
+    });
+  };
+
   const user = accessToken ? jwtDecode(accessToken) : null;
 
   return (
@@ -126,7 +147,8 @@ export function AuthProvider({ tokenUrl, registerUrl, refreshUrl, children }) {
         refresh,
         loginError,
         registrationError,
-        logout
+        logout,
+        grant
       }}
     >
       {children}

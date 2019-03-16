@@ -8,6 +8,7 @@ import TokenString from "./TokenString";
 import TimeAgo from "react-timeago";
 import PrimaryButton from "./PrimaryButton";
 import SecondaryButton from "./SecondaryButton";
+import Reveal from "./Reveal";
 
 export default function UserTools() {
   const auth = useContext(AuthContext);
@@ -57,7 +58,9 @@ export default function UserTools() {
               </tr>
               <tr>
                 <td style={{ verticalAlign: "top" }}>
-                  <TokenString>{auth.accessToken}</TokenString>
+                  <Reveal>
+                    <TokenString>{auth.accessToken}</TokenString>
+                  </Reveal>
                 </td>
                 <td style={{ verticalAlign: "top", textAlign: "right" }}>
                   <TimeAgo date={auth.user.exp * 1000} />

@@ -17,6 +17,8 @@ export default function GrantForm() {
     await auth.grant(userId, scope);
 
     setLoading(false);
+    setUserId("");
+    setScope("");
   }
 
   const onChange = updateFn => e => updateFn(e.target.value);

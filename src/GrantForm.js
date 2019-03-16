@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { Form, Message, Input, Button } from "semantic-ui-react";
+import PrimaryButton from "./PrimaryButton";
 
 export default function GrantForm() {
   const auth = useContext(AuthContext);
@@ -47,7 +48,7 @@ export default function GrantForm() {
         />
       </Form.Field>
 
-      <Button>{loading ? "Granting..." : "Grant"}</Button>
+      <PrimaryButton basic>{loading ? "Granting..." : "Grant"}</PrimaryButton>
     </Form>
   );
 }

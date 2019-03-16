@@ -6,6 +6,8 @@ import LogoutButton from "./LogoutButton";
 import RefreshButton from "./RefreshButton";
 import TokenString from "./TokenString";
 import TimeAgo from "react-timeago";
+import PrimaryButton from "./PrimaryButton";
+import SecondaryButton from "./SecondaryButton";
 
 export default function UserTools() {
   const auth = useContext(AuthContext);
@@ -16,7 +18,7 @@ export default function UserTools() {
 
   return (
     <Fragment>
-      <Segment>
+      <Segment color="purple">
         <Header as="h2">User Tools</Header>
 
         <Segment>
@@ -64,8 +66,8 @@ export default function UserTools() {
             </tbody>
           </Table>
           <Divider hidden />
-          <LogoutButton />
-          <RefreshButton />
+          <LogoutButton basic buttonComponent={PrimaryButton} />
+          <RefreshButton basic buttonComponent={SecondaryButton} />
         </Segment>
       </Segment>
     </Fragment>

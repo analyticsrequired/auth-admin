@@ -6,12 +6,12 @@ import RegistrationForm from "./RegistrationForm";
 export default function NotLoggedIn(props) {
   return (
     <Fragment>
-      <Segment>
+      <Segment color="purple">
         <Header as="h2">Login</Header>
         <LoginForm />
       </Segment>
 
-      <Segment>
+      <Segment color="orange">
         <Header as="h2">Register</Header>
         <RegistrationForm />
       </Segment>

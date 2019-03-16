@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { Form, Message, Input, Button } from "semantic-ui-react";
+import PrimaryButton from "./PrimaryButton";
 
 export default function LoginForm() {
   const auth = useContext(AuthContext);
@@ -49,7 +50,7 @@ export default function LoginForm() {
         />
       </Form.Field>
 
-      <Button>{loading ? "Logging in..." : "Login"}</Button>
+      <PrimaryButton basic>{loading ? "Logging in..." : "Login"}</PrimaryButton>
     </Form>
   );
 }

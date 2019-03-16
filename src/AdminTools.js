@@ -11,7 +11,7 @@ export default function AdminTools() {
   }
 
   return auth.user.permissions.includes("admin") ? (
-    <Segment>
+    <Segment color="orange">
       <Header as="h2">Admin Tools</Header>
 
       <Segment>

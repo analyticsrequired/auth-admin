@@ -1,23 +1,25 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
-import { Form, Message, Input, Button } from "semantic-ui-react";
+import { Form, Message, Input } from "semantic-ui-react";
 import PrimaryButton from "./PrimaryButton";
+import { LoadingContext } from "./LoadingContext";
 
 export default function RegistrationForm() {
   const auth = useContext(AuthContext);
+  const loading = useContext(LoadingContext);
 
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
 
   async function onSubmit(e) {
     e.preventDefault();
 
-    setLoading(true);
+    loading.setIsLoading(true);
 
     await auth.register(userId, password);
 
-    setLoading(false);
+    loading.setIsLoading(false);
+
     setUserId("");
     setPassword("");
   }
@@ -36,7 +38,6 @@ export default function RegistrationForm() {
           label="User Id"
           value={userId}
           required
-          disabled={loading}
           onChange={onChange(setUserId)}
         />
       </Form.Field>
@@ -47,14 +48,11 @@ export default function RegistrationForm() {
           label="Password"
           value={password}
           required
-          disabled={loading}
           onChange={onChange(setPassword)}
         />
       </Form.Field>
 
-      <PrimaryButton basic>
-        {loading ? "Registering..." : "Register"}
-      </PrimaryButton>
+      <PrimaryButton basic>Register</PrimaryButton>
     </Form>
   );
 }

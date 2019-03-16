@@ -1,15 +1,22 @@
 import React, { useContext } from "react";
 import { Button } from "semantic-ui-react";
 import { AuthContext } from "./AuthContext";
-import PrimaryButton from "./PrimaryButton";
+import { LoadingContext } from "./LoadingContext";
 
 export default function RefreshButton(props) {
   const { buttonComponent: ButtonComponent = Button, ...buttonProps } = props;
-  const auth = useContext(AuthContext);
 
-  function onClick(e) {
+  const auth = useContext(AuthContext);
+  const loading = useContext(LoadingContext);
+
+  async function onClick(e) {
     e.preventDefault();
-    auth.refresh();
+
+    loading.setIsLoading(true);
+
+    await auth.refresh();
+
+    loading.setIsLoading(false);
   }
 
   return (

@@ -1,23 +1,25 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
-import { Form, Message, Input, Button } from "semantic-ui-react";
+import { LoadingContext } from "./LoadingContext";
+import { Form, Message, Input } from "semantic-ui-react";
 import PrimaryButton from "./PrimaryButton";
 
 export default function GrantForm() {
   const auth = useContext(AuthContext);
+  const loading = useContext(LoadingContext);
 
   const [userId, setUserId] = useState("");
   const [scope, setScope] = useState("");
-  const [loading, setLoading] = useState(false);
 
   async function onSubmit(e) {
     e.preventDefault();
 
-    setLoading(true);
+    loading.setIsLoading(true);
 
     await auth.grant(userId, scope);
 
-    setLoading(false);
+    loading.setIsLoading(false);
+
     setUserId("");
     setScope("");
   }
@@ -35,7 +37,6 @@ export default function GrantForm() {
           value={userId}
           autoFocus
           required
-          disabled={loading}
           onChange={onChange(setUserId)}
         />
       </Form.Field>
@@ -46,12 +47,11 @@ export default function GrantForm() {
           label="Scope"
           value={scope}
           required
-          disabled={loading}
           onChange={onChange(setScope)}
         />
       </Form.Field>
 
-      <PrimaryButton basic>{loading ? "Granting..." : "Grant"}</PrimaryButton>
+      <PrimaryButton basic>Grant</PrimaryButton>
     </Form>
   );
 }

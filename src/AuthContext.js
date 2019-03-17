@@ -10,6 +10,7 @@ export function AuthProvider({
   registerUrl,
   refreshUrl,
   grantUrl,
+  getUserUrl,
   children
 }) {
   const [refreshToken, setRefreshToken] = useState(
@@ -21,6 +22,7 @@ export function AuthProvider({
   const [loginError, setLoginError] = useState();
   const [registrationError, setRegistrationError] = useState();
   const [grantError, setGrantError] = useState();
+  const [getUserError, setGetUserError] = useState();
 
   const login = async (userId, password) => {
     setLoginError();
@@ -163,6 +165,42 @@ export function AuthProvider({
     }
   };
 
+  const getUser = async userId => {
+    setGetUserError();
+
+    let response;
+
+    try {
+      response = await fetch(`${getUserUrl}/${userId}`, {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${accessToken}`
+        }
+      });
+    } catch (e) {
+      setGetUserError("An error occurred while getting user");
+      return;
+    }
+
+    if (response.status === 200) {
+      setGetUserError();
+      const user = await response.json();
+      return user;
+    }
+
+    if (response.status === 403) {
+      setGetUserError("Forbidden");
+      return;
+    }
+
+    if (response.status === 404) {
+      setGetUserError("Unknown user");
+      return;
+    }
+  };
+
   const user = accessToken ? jwtDecode(accessToken) : null;
 
   return (
@@ -178,7 +216,9 @@ export function AuthProvider({
         registrationError,
         logout,
         grant,
-        grantError
+        grantError,
+        getUser,
+        getUserError
       }}
     >
       {children}

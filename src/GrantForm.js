@@ -3,25 +3,26 @@ import { AuthContext } from "./AuthContext";
 import { LoadingContext } from "./LoadingContext";
 import { Form, Message, Input } from "semantic-ui-react";
 import PrimaryButton from "./PrimaryButton";
+import PermissionsInput from "./PermissionsInput";
 
 export default function GrantForm() {
   const auth = useContext(AuthContext);
   const loading = useContext(LoadingContext);
 
   const [userId, setUserId] = useState("");
-  const [scope, setScope] = useState("");
+  const [permissions, setPermissions] = useState([]);
 
   async function onSubmit(e) {
     e.preventDefault();
 
     loading.setIsLoading(true);
 
-    await auth.grant(userId, scope);
+    await auth.grant(userId, permissions.join(" "));
 
     loading.setIsLoading(false);
 
     setUserId("");
-    setScope("");
+    setPermissions([]);
   }
 
   const onChange = updateFn => e => updateFn(e.target.value);
@@ -42,12 +43,9 @@ export default function GrantForm() {
       </Form.Field>
 
       <Form.Field>
-        <Input
-          type="text"
-          label="Scope"
-          value={scope}
-          required
-          onChange={onChange(setScope)}
+        <PermissionsInput
+          value={permissions}
+          onChange={onChange(setPermissions)}
         />
       </Form.Field>
 

@@ -1,7 +1,7 @@
 import React, { useContext, useState, Fragment } from "react";
 import { AuthContext } from "./AuthContext";
 import { LoadingContext } from "./LoadingContext";
-import { Form, Message, Input, Divider, Header } from "semantic-ui-react";
+import { Form, Message, Input, Header, Segment } from "semantic-ui-react";
 import PrimaryButton from "./PrimaryButton";
 import SecondaryButton from "./SecondaryButton";
 import GrantForm from "./GrantForm";
@@ -40,11 +40,15 @@ export default function GetUser(props) {
         <Fragment>
           <Header as="h4">{user.userId}</Header>
 
-          <GrantForm user={user} />
+          <Segment>
+            <Header as="h5">Grant</Header>
 
-          <SecondaryButton basic onClick={onClickClear}>
-            Clear
-          </SecondaryButton>
+            <GrantForm user={user} />
+
+            <SecondaryButton basic onClick={onClickClear}>
+              Clear
+            </SecondaryButton>
+          </Segment>
         </Fragment>
       ) : (
         <Form onSubmit={onSubmit}>

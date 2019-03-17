@@ -15,7 +15,7 @@ export default function AdminTools() {
       <Header as="h2">Admin Tools</Header>
 
       <Segment>
-        <Header as="h3">Grant</Header>
+        <Header as="h3">Get User</Header>
 
         <GetUser />
       </Segment>

@@ -11,7 +11,8 @@ import {
   authTokenUrl,
   authRegisterUrl,
   authRefreshUrl,
-  authGrantUrl
+  authGrantUrl,
+  authGetUserUrl
 } from "./config";
 
 ReactDOM.render(
@@ -21,6 +22,7 @@ ReactDOM.render(
       registerUrl={authRegisterUrl}
       refreshUrl={authRefreshUrl}
       grantUrl={authGrantUrl}
+      getUserUrl={authGetUserUrl}
     >
       <Container style={{ marginTop: "2em" }}>
         <App />

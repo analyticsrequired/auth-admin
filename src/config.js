@@ -3,3 +3,4 @@ export const authTokenUrl = `${authServerUrl}/token`;
 export const authRegisterUrl = `${authServerUrl}/register`;
 export const authRefreshUrl = `${authServerUrl}/refresh`;
 export const authGrantUrl = `${authServerUrl}/grant`;
+export const authGetUserUrl = `${authServerUrl}/user`;

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Segment, Header } from "semantic-ui-react";
 import { AuthContext } from "./AuthContext";
-import GrantForm from "./GrantForm";
+import GetUser from "./GetUser";
 
 export default function AdminTools() {
   const auth = useContext(AuthContext);
@@ -15,9 +15,9 @@ export default function AdminTools() {
       <Header as="h2">Admin Tools</Header>
 
       <Segment>
-        <Header as="h3">Grant</Header>
+        <Header as="h3">Get User</Header>
 
-        <GrantForm />
+        <GetUser />
       </Segment>
     </Segment>
   ) : null;

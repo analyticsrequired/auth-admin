@@ -28,12 +28,14 @@ export default function PermissionInput(props) {
 
   return (
     <div>
-      {props.value.map((permission, i) => (
-        <Label>
-          {permission}
-          <Icon key={i} onClick={onClickDelete(i)} name="delete" />
-        </Label>
-      ))}
+      <Label.Group size="large">
+        {props.value.map((permission, i) => (
+          <Label key={i}>
+            {permission}
+            <Icon onClick={onClickDelete(i)} name="delete" />
+          </Label>
+        ))}
+      </Label.Group>
 
       <Input
         type="text"

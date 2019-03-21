@@ -137,6 +137,8 @@ export function AuthProvider({
     let response;
 
     try {
+      loading.setIsLoading(true);
+
       response = await fetch(grantUrl, {
         method: "POST",
         mode: "cors",
@@ -151,6 +153,8 @@ export function AuthProvider({
       });
     } catch (e) {
       errors.setGrantError("Error occurred during grant");
+    } finally {
+      loading.setIsLoading(false);
     }
 
     switch (response.status) {

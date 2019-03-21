@@ -3,8 +3,8 @@ import { Dimmer, Loader } from "semantic-ui-react";
 import "./App.css";
 import { AuthContext } from "./contexts/AuthContext";
 import { LoadingContext } from "./contexts/LoadingContext";
-import LoggedIn from "./LoggedIn";
-import NotLoggedIn from "./NotLoggedIn";
+import LoggedIn from "./pages/LoggedIn";
+import NotLoggedIn from "./pages/NotLoggedIn";
 import logo from "./logo.png";
 
 function App() {

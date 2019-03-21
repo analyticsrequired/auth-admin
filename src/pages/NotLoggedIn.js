@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Segment, Header } from "semantic-ui-react";
-import LoginForm from "./components/LoginForm";
-import RegistrationForm from "./components/RegistrationForm";
+import LoginForm from "../components/LoginForm";
+import RegistrationForm from "../components/RegistrationForm";
 
 export default function NotLoggedIn(props) {
   return (

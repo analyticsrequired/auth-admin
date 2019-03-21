@@ -67,6 +67,8 @@ export function AuthProvider({
     let response;
 
     try {
+      loading.setIsLoading(true);
+
       response = await fetch(refreshUrl, {
         method: "POST",
         mode: "cors",
@@ -92,6 +94,8 @@ export function AuthProvider({
       errors.setRefreshError("Error occurred during refresh.");
       logout();
       return;
+    } finally {
+      loading.setIsLoading(false);
     }
   };
 

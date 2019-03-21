@@ -1,5 +1,6 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from "react";
 import jwtDecode from "jwt-decode";
+import { ErrorContext } from "./ErrorContext";
 
 const localStorageKey = "ar_refresh_token";
 
@@ -13,19 +14,16 @@ export function AuthProvider({
   getUserUrl,
   children
 }) {
+  const errors = useContext(ErrorContext);
+
   const [refreshToken, setRefreshToken] = useState(
     window.localStorage.getItem(localStorageKey)
   );
 
   const [accessToken, setAccessToken] = useState();
 
-  const [loginError, setLoginError] = useState();
-  const [registrationError, setRegistrationError] = useState();
-  const [grantError, setGrantError] = useState();
-  const [getUserError, setGetUserError] = useState();
-
   const login = async (userId, password) => {
-    setLoginError();
+    errors.setLoginError();
 
     let response;
 
@@ -42,7 +40,7 @@ export function AuthProvider({
         })
       });
     } catch (e) {
-      setLoginError("Error occurred during login.");
+      errors.setLoginError("Error occurred during login.");
       return;
     }
 
@@ -56,7 +54,7 @@ export function AuthProvider({
     }
 
     if (response.status === 401)
-      return setLoginError("Invalid user id or password");
+      return errors.setLoginError("Invalid user id or password");
   };
 
   const refresh = async (token = refreshToken) => {
@@ -72,7 +70,7 @@ export function AuthProvider({
         }
       });
     } catch (e) {
-      setLoginError("Error occurred during login.");
+      errors.setLoginError("Error occurred during login.");
       return;
     }
 
@@ -86,12 +84,12 @@ export function AuthProvider({
       const text = await response.text();
       setRefreshToken();
       window.localStorage.removeItem(localStorageKey);
-      return setLoginError(`Invalid refresh token: ${text}`);
+      return errors.setLoginError(`Invalid refresh token: ${text}`);
     }
   };
 
   const register = async (userId, password) => {
-    setRegistrationError();
+    errors.setRegistrationError();
 
     try {
       const response = await fetch(registerUrl, {
@@ -111,9 +109,9 @@ export function AuthProvider({
         return;
       }
 
-      setRegistrationError("Error occurred during registration.");
+      errors.setRegistrationError("Error occurred during registration.");
     } catch (e) {
-      setRegistrationError("Error occurred during registration.");
+      errors.setRegistrationError("Error occurred during registration.");
     }
   };
 
@@ -123,7 +121,7 @@ export function AuthProvider({
   };
 
   const grant = async (userId, scope) => {
-    setGrantError();
+    errors.setGrantError();
 
     let response;
 
@@ -141,32 +139,32 @@ export function AuthProvider({
         })
       });
     } catch (e) {
-      setGrantError("Error occurred during grant");
+      errors.setGrantError("Error occurred during grant");
     }
 
     switch (response.status) {
       case 201:
-        setGrantError();
+        errors.setGrantError();
         break;
 
       case 400:
         const json = await response.json();
         const { error } = json;
-        setGrantError(error);
+        errors.setGrantError(error);
         break;
 
       case 403:
-        setGrantError("Forbidden");
+        errors.setGrantError("Forbidden");
         break;
 
       default:
-        setGrantError("Unknown error occurred");
+        errors.setGrantError("Unknown error occurred");
         break;
     }
   };
 
   const getUser = async userId => {
-    setGetUserError();
+    errors.setGetUserError();
 
     let response;
 
@@ -180,23 +178,23 @@ export function AuthProvider({
         }
       });
     } catch (e) {
-      setGetUserError("An error occurred while getting user");
+      errors.setGetUserError("An error occurred while getting user");
       return;
     }
 
     if (response.status === 200) {
-      setGetUserError();
+      errors.setGetUserError();
       const user = await response.json();
       return user;
     }
 
     if (response.status === 403) {
-      setGetUserError("Forbidden");
+      errors.setGetUserError("Forbidden");
       return;
     }
 
     if (response.status === 404) {
-      setGetUserError("Unknown user");
+      errors.setGetUserError("Unknown user");
       return;
     }
   };
@@ -212,13 +210,9 @@ export function AuthProvider({
         login,
         register,
         refresh,
-        loginError,
-        registrationError,
         logout,
         grant,
-        grantError,
-        getUser,
-        getUserError
+        getUser
       }}
     >
       {children}

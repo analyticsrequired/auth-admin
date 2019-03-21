@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
+import { ErrorProvider } from "./ErrorContext";
 import { AuthProvider } from "./AuthContext";
 import { LoadingProvider } from "./LoadingContext";
 import * as serviceWorker from "./serviceWorker";
@@ -16,19 +17,21 @@ import {
 } from "./config";
 
 ReactDOM.render(
-  <LoadingProvider>
-    <AuthProvider
-      tokenUrl={authTokenUrl}
-      registerUrl={authRegisterUrl}
-      refreshUrl={authRefreshUrl}
-      grantUrl={authGrantUrl}
-      getUserUrl={authGetUserUrl}
-    >
-      <Container style={{ marginTop: "2em" }}>
-        <App />
-      </Container>
-    </AuthProvider>
-  </LoadingProvider>,
+  <ErrorProvider>
+    <LoadingProvider>
+      <AuthProvider
+        tokenUrl={authTokenUrl}
+        registerUrl={authRegisterUrl}
+        refreshUrl={authRefreshUrl}
+        grantUrl={authGrantUrl}
+        getUserUrl={authGetUserUrl}
+      >
+        <Container style={{ marginTop: "2em" }}>
+          <App />
+        </Container>
+      </AuthProvider>
+    </LoadingProvider>
+  </ErrorProvider>,
   document.getElementById("root")
 );
 

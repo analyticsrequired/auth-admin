@@ -4,9 +4,11 @@ import { LoadingContext } from "./LoadingContext";
 import { Form, Message } from "semantic-ui-react";
 import PrimaryButton from "./PrimaryButton";
 import PermissionsInput from "./PermissionsInput";
+import { ErrorContext } from "./ErrorContext";
 
 export default function GrantForm(props) {
   const auth = useContext(AuthContext);
+  const errors = useContext(ErrorContext);
   const loading = useContext(LoadingContext);
 
   const [permissions, setPermissions] = useState(props.user.permissions || []);
@@ -25,7 +27,9 @@ export default function GrantForm(props) {
 
   return (
     <Form onSubmit={onSubmit}>
-      {auth.grantError ? <Message negative>{auth.grantError}</Message> : null}
+      {errors.grantError ? (
+        <Message negative>{errors.grantError}</Message>
+      ) : null}
 
       <Form.Field>
         <PermissionsInput

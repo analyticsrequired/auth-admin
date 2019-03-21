@@ -3,9 +3,11 @@ import { AuthContext } from "./AuthContext";
 import { Form, Message, Input } from "semantic-ui-react";
 import PrimaryButton from "./PrimaryButton";
 import { LoadingContext } from "./LoadingContext";
+import { ErrorContext } from "./ErrorContext";
 
 export default function RegistrationForm() {
   const auth = useContext(AuthContext);
+  const errors = useContext(ErrorContext);
   const loading = useContext(LoadingContext);
 
   const [userId, setUserId] = useState("");
@@ -28,8 +30,8 @@ export default function RegistrationForm() {
 
   return (
     <Form onSubmit={onSubmit}>
-      {auth.registrationError ? (
-        <Message negative>{auth.registrationError}</Message>
+      {errors.registrationError ? (
+        <Message negative>{errors.registrationError}</Message>
       ) : null}
 
       <Form.Field>

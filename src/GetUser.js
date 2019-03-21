@@ -5,9 +5,11 @@ import { Form, Message, Input, Header, Segment } from "semantic-ui-react";
 import PrimaryButton from "./PrimaryButton";
 import SecondaryButton from "./SecondaryButton";
 import GrantForm from "./GrantForm";
+import { ErrorContext } from "./ErrorContext";
 
 export default function GetUser(props) {
   const auth = useContext(AuthContext);
+  const errors = useContext(ErrorContext);
   const loading = useContext(LoadingContext);
 
   const [userId, setUserId] = useState("");
@@ -52,8 +54,8 @@ export default function GetUser(props) {
         </Fragment>
       ) : (
         <Form onSubmit={onSubmit}>
-          {auth.getUserError ? (
-            <Message negative>{auth.getUserError}</Message>
+          {errors.getUserError ? (
+            <Message negative>{errors.getUserError}</Message>
           ) : null}
 
           <Form.Field>

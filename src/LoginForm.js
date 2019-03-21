@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
+import { ErrorContext } from "./ErrorContext";
 import { LoadingContext } from "./LoadingContext";
 import { Form, Message, Input } from "semantic-ui-react";
 import PrimaryButton from "./PrimaryButton";
 
 export default function LoginForm() {
   const auth = useContext(AuthContext);
+  const errors = useContext(ErrorContext);
   const loader = useContext(LoadingContext);
 
   const [userId, setUserId] = useState("");
@@ -28,7 +30,9 @@ export default function LoginForm() {
 
   return (
     <Form onSubmit={onSubmit}>
-      {auth.loginError ? <Message negative>{auth.loginError}</Message> : null}
+      {errors.loginError ? (
+        <Message negative>{errors.loginError}</Message>
+      ) : null}
 
       <Form.Field>
         <Input

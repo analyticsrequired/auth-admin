@@ -8,11 +8,11 @@ export default function Token() {
 
   const existingRefreshToken = window.localStorage.getItem("ar_refresh_token");
 
-  if (existingRefreshToken) {
+  if (existingRefreshToken && !auth.user) {
     auth.refresh(existingRefreshToken);
   }
 
-  return auth.accessToken ? (
+  return auth.user ? (
     <Fragment>
       <UserTools />
       <AdminTools />

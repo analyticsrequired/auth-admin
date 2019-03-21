@@ -2,7 +2,6 @@ import React, { useContext, useState, Fragment } from "react";
 import { Form, Message, Input, Header, Segment } from "semantic-ui-react";
 import { ErrorContext } from "../contexts/ErrorContext";
 import { AuthContext } from "../contexts/AuthContext";
-import { LoadingContext } from "../contexts/LoadingContext";
 import PrimaryButton from "./PrimaryButton";
 import SecondaryButton from "./SecondaryButton";
 import GrantForm from "./GrantForm";
@@ -10,7 +9,6 @@ import GrantForm from "./GrantForm";
 export default function GetUser(props) {
   const auth = useContext(AuthContext);
   const errors = useContext(ErrorContext);
-  const loading = useContext(LoadingContext);
 
   const [userId, setUserId] = useState("");
 
@@ -19,12 +17,8 @@ export default function GetUser(props) {
   async function onSubmit(e) {
     e.preventDefault();
 
-    loading.setIsLoading(true);
-
     const userResponse = await auth.getUser(userId);
     setUser(userResponse);
-
-    loading.setIsLoading(false);
 
     setUserId("");
   }

@@ -180,6 +180,8 @@ export function AuthProvider({
     let response;
 
     try {
+      loading.setIsLoading(true);
+
       response = await fetch(`${getUserUrl}/${userId}`, {
         method: "GET",
         mode: "cors",
@@ -191,6 +193,8 @@ export function AuthProvider({
     } catch (e) {
       errors.setGetUserError("An error occurred while getting user");
       return;
+    } finally {
+      loading.setIsLoading(false);
     }
 
     if (response.status === 200) {

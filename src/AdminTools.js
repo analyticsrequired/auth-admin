@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Segment, Header } from "semantic-ui-react";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "./contexts/AuthContext";
 import GetUser from "./GetUser";
 
 export default function AdminTools() {

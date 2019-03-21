@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
-import { AuthContext } from "./AuthContext";
-import { ErrorContext } from "./ErrorContext";
-import { LoadingContext } from "./LoadingContext";
 import { Form, Message, Input } from "semantic-ui-react";
+import { ErrorContext } from "./contexts/ErrorContext";
+import { AuthContext } from "./contexts/AuthContext";
+import { LoadingContext } from "./contexts/LoadingContext";
 import PrimaryButton from "./PrimaryButton";
 
 export default function LoginForm() {

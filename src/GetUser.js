@@ -1,11 +1,11 @@
 import React, { useContext, useState, Fragment } from "react";
-import { AuthContext } from "./AuthContext";
-import { LoadingContext } from "./LoadingContext";
 import { Form, Message, Input, Header, Segment } from "semantic-ui-react";
+import { ErrorContext } from "./contexts/ErrorContext";
+import { AuthContext } from "./contexts/AuthContext";
+import { LoadingContext } from "./contexts/LoadingContext";
 import PrimaryButton from "./PrimaryButton";
 import SecondaryButton from "./SecondaryButton";
 import GrantForm from "./GrantForm";
-import { ErrorContext } from "./ErrorContext";
 
 export default function GetUser(props) {
   const auth = useContext(AuthContext);

@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
-import { AuthContext } from "./AuthContext";
-import { LoadingContext } from "./LoadingContext";
 import { Form, Message } from "semantic-ui-react";
+import { ErrorContext } from "./contexts/ErrorContext";
+import { AuthContext } from "./contexts/AuthContext";
+import { LoadingContext } from "./contexts/LoadingContext";
 import PrimaryButton from "./PrimaryButton";
 import PermissionsInput from "./PermissionsInput";
-import { ErrorContext } from "./ErrorContext";
 
 export default function GrantForm(props) {
   const auth = useContext(AuthContext);

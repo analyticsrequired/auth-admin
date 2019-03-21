@@ -1,11 +1,11 @@
 import React, { useContext, Fragment } from "react";
+import { Dimmer, Loader } from "semantic-ui-react";
 import "./App.css";
-import { AuthContext } from "./AuthContext";
-import { LoadingContext } from "./LoadingContext";
+import { AuthContext } from "./contexts/AuthContext";
+import { LoadingContext } from "./contexts/LoadingContext";
 import LoggedIn from "./LoggedIn";
 import NotLoggedIn from "./NotLoggedIn";
 import logo from "./logo.png";
-import { Dimmer, Loader } from "semantic-ui-react";
 
 function App() {
   const auth = useContext(AuthContext);

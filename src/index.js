@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Container } from "semantic-ui-react";
+import "semantic-ui-css/semantic.min.css";
 import "./index.css";
 import App from "./App";
-import { ErrorProvider } from "./ErrorContext";
-import { AuthProvider } from "./AuthContext";
-import { LoadingProvider } from "./LoadingContext";
+import { ErrorProvider } from "./contexts/ErrorContext";
+import { AuthProvider } from "./contexts/AuthContext";
+import { LoadingProvider } from "./contexts/LoadingContext";
 import * as serviceWorker from "./serviceWorker";
-import "semantic-ui-css/semantic.min.css";
-import { Container } from "semantic-ui-react";
 import {
   authTokenUrl,
   authRegisterUrl,

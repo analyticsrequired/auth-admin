@@ -1,7 +1,7 @@
 import React, { useContext, Fragment } from "react";
 import styled from "styled-components";
-import { AuthContext } from "./AuthContext";
 import { Segment, Label, Header, Divider } from "semantic-ui-react";
+import { AuthContext } from "./contexts/AuthContext";
 import LogoutButton from "./LogoutButton";
 import RefreshButton from "./RefreshButton";
 import TokenString from "./TokenString";

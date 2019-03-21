@@ -1,8 +1,8 @@
 import React, { Fragment, useContext } from "react";
-import UserTools from "./UserTools";
-import AdminTools from "./AdminTools";
-import { AuthContext } from "./contexts/AuthContext";
 import { Dimmer, Loader } from "semantic-ui-react";
+import { AuthContext } from "./contexts/AuthContext";
+import UserTools from "./components/UserTools";
+import AdminTools from "./components/AdminTools";
 
 export default function Token() {
   const auth = useContext(AuthContext);

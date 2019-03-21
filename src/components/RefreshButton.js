@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Button } from "semantic-ui-react";
-import { AuthContext } from "./contexts/AuthContext";
-import { LoadingContext } from "./contexts/LoadingContext";
+import { AuthContext } from "../contexts/AuthContext";
+import { LoadingContext } from "../contexts/LoadingContext";
 
 export default function RefreshButton(props) {
   const { buttonComponent: ButtonComponent = Button, ...buttonProps } = props;

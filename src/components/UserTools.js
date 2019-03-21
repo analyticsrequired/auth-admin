@@ -1,11 +1,11 @@
 import React, { useContext, Fragment } from "react";
 import styled from "styled-components";
 import { Segment, Label, Header, Divider } from "semantic-ui-react";
-import { AuthContext } from "./contexts/AuthContext";
+import TimeAgo from "react-timeago";
+import { AuthContext } from "../contexts/AuthContext";
 import LogoutButton from "./LogoutButton";
 import RefreshButton from "./RefreshButton";
 import TokenString from "./TokenString";
-import TimeAgo from "react-timeago";
 import PrimaryButton from "./PrimaryButton";
 import SecondaryButton from "./SecondaryButton";
 import Reveal from "./Reveal";

@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import { Form, Message } from "semantic-ui-react";
-import { ErrorContext } from "./contexts/ErrorContext";
-import { AuthContext } from "./contexts/AuthContext";
-import { LoadingContext } from "./contexts/LoadingContext";
+import { ErrorContext } from "../contexts/ErrorContext";
+import { AuthContext } from "../contexts/AuthContext";
+import { LoadingContext } from "../contexts/LoadingContext";
 import PrimaryButton from "./PrimaryButton";
 import PermissionsInput from "./PermissionsInput";
 

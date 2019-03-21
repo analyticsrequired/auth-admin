@@ -11,16 +11,12 @@ function App() {
   const auth = useContext(AuthContext);
   const loading = useContext(LoadingContext);
 
-  const existingRefreshToken = window.localStorage.getItem("ar_refresh_token");
-
-  if (existingRefreshToken) {
-    auth.refresh(existingRefreshToken);
-  }
-
   return (
     <Fragment>
       <img src={logo} alt="Analytics Required" />
+
       {auth.refreshToken ? <LoggedIn /> : <NotLoggedIn />}
+
       {loading.isLoading ? (
         <Dimmer active inverted>
           <Loader />

@@ -69,22 +69,23 @@ export function AuthProvider({
           Authorization: `JWT ${token}`
         }
       });
+
+      if (response.status === 201) {
+        const token = await response.text();
+
+        setAccessToken(token);
+      }
+
+      if (response.status === 401) {
+        const text = await response.text();
+        setRefreshToken();
+        window.localStorage.removeItem(localStorageKey);
+        return errors.setLoginError(`Invalid refresh token: ${text}`);
+      }
     } catch (e) {
-      errors.setLoginError("Error occurred during login.");
+      errors.setRefreshError("Error occurred during refresh.");
+      logout();
       return;
-    }
-
-    if (response.status === 201) {
-      const token = await response.text();
-
-      setAccessToken(token);
-    }
-
-    if (response.status === 401) {
-      const text = await response.text();
-      setRefreshToken();
-      window.localStorage.removeItem(localStorageKey);
-      return errors.setLoginError(`Invalid refresh token: ${text}`);
     }
   };
 

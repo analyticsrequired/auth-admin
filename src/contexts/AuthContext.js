@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext } from "react";
 import jwtDecode from "jwt-decode";
 import { ErrorContext } from "./ErrorContext";
+import { LoadingContext } from "./LoadingContext";
 
 const localStorageKey = "ar_refresh_token";
 
@@ -15,6 +16,7 @@ export function AuthProvider({
   children
 }) {
   const errors = useContext(ErrorContext);
+  const loading = useContext(LoadingContext);
 
   const [refreshToken, setRefreshToken] = useState(
     window.localStorage.getItem(localStorageKey)
@@ -28,6 +30,8 @@ export function AuthProvider({
     let response;
 
     try {
+      loading.setIsLoading(true);
+
       response = await fetch(tokenUrl, {
         method: "POST",
         mode: "cors",
@@ -42,6 +46,8 @@ export function AuthProvider({
     } catch (e) {
       errors.setLoginError("Error occurred during login.");
       return;
+    } finally {
+      loading.setIsLoading(false);
     }
 
     if (response.status === 201) {
@@ -61,6 +67,8 @@ export function AuthProvider({
     let response;
 
     try {
+      loading.setIsLoading(true);
+
       response = await fetch(refreshUrl, {
         method: "POST",
         mode: "cors",
@@ -86,6 +94,8 @@ export function AuthProvider({
       errors.setRefreshError("Error occurred during refresh.");
       logout();
       return;
+    } finally {
+      loading.setIsLoading(false);
     }
   };
 
@@ -93,6 +103,8 @@ export function AuthProvider({
     errors.setRegistrationError();
 
     try {
+      loading.setIsLoading(true);
+
       const response = await fetch(registerUrl, {
         method: "POST",
         mode: "cors",
@@ -113,6 +125,8 @@ export function AuthProvider({
       errors.setRegistrationError("Error occurred during registration.");
     } catch (e) {
       errors.setRegistrationError("Error occurred during registration.");
+    } finally {
+      loading.setIsLoading(false);
     }
   };
 
@@ -127,6 +141,8 @@ export function AuthProvider({
     let response;
 
     try {
+      loading.setIsLoading(true);
+
       response = await fetch(grantUrl, {
         method: "POST",
         mode: "cors",
@@ -141,6 +157,8 @@ export function AuthProvider({
       });
     } catch (e) {
       errors.setGrantError("Error occurred during grant");
+    } finally {
+      loading.setIsLoading(false);
     }
 
     switch (response.status) {
@@ -170,6 +188,8 @@ export function AuthProvider({
     let response;
 
     try {
+      loading.setIsLoading(true);
+
       response = await fetch(`${getUserUrl}/${userId}`, {
         method: "GET",
         mode: "cors",
@@ -181,6 +201,8 @@ export function AuthProvider({
     } catch (e) {
       errors.setGetUserError("An error occurred while getting user");
       return;
+    } finally {
+      loading.setIsLoading(false);
     }
 
     if (response.status === 200) {

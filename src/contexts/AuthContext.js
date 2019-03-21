@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext } from "react";
 import jwtDecode from "jwt-decode";
 import { ErrorContext } from "./ErrorContext";
+import { LoadingContext } from "./LoadingContext";
 
 const localStorageKey = "ar_refresh_token";
 
@@ -15,6 +16,7 @@ export function AuthProvider({
   children
 }) {
   const errors = useContext(ErrorContext);
+  const loading = useContext(LoadingContext);
 
   const [refreshToken, setRefreshToken] = useState(
     window.localStorage.getItem(localStorageKey)
@@ -28,6 +30,8 @@ export function AuthProvider({
     let response;
 
     try {
+      loading.setIsLoading(true);
+
       response = await fetch(tokenUrl, {
         method: "POST",
         mode: "cors",
@@ -42,6 +46,8 @@ export function AuthProvider({
     } catch (e) {
       errors.setLoginError("Error occurred during login.");
       return;
+    } finally {
+      loading.setIsLoading(false);
     }
 
     if (response.status === 201) {

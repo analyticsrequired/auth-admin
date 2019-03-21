@@ -103,6 +103,8 @@ export function AuthProvider({
     errors.setRegistrationError();
 
     try {
+      loading.setIsLoading(true);
+
       const response = await fetch(registerUrl, {
         method: "POST",
         mode: "cors",
@@ -123,6 +125,8 @@ export function AuthProvider({
       errors.setRegistrationError("Error occurred during registration.");
     } catch (e) {
       errors.setRegistrationError("Error occurred during registration.");
+    } finally {
+      loading.setIsLoading(false);
     }
   };
 

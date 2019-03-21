@@ -16,11 +16,7 @@ export default function RegistrationForm() {
   async function onSubmit(e) {
     e.preventDefault();
 
-    loading.setIsLoading(true);
-
     await auth.register(userId, password);
-
-    loading.setIsLoading(false);
 
     setUserId("");
     setPassword("");

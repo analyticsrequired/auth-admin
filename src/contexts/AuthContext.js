@@ -2,10 +2,13 @@ import React, { createContext, useState, useContext } from "react";
 import jwtDecode from "jwt-decode";
 import { ErrorContext } from "./ErrorContext";
 import { LoadingContext } from "./LoadingContext";
-
-const localStorageKey = "ar_refresh_token";
+import getCookie from "../lib/getCookie";
 
 export const AuthContext = createContext();
+
+export const refreshTokenCookieName = "refreshToken";
+
+const cookieExpireDateString = "Thu, 01 Jan 1970 00:00:00 GMT";
 
 export function AuthProvider({
   tokenUrl,
@@ -19,7 +22,7 @@ export function AuthProvider({
   const loading = useContext(LoadingContext);
 
   const [refreshToken, setRefreshToken] = useState(
-    window.localStorage.getItem(localStorageKey)
+    getCookie(refreshTokenCookieName)
   );
 
   const [accessToken, setAccessToken] = useState();
@@ -54,7 +57,8 @@ export function AuthProvider({
       const token = await response.text();
 
       setRefreshToken(token);
-      window.localStorage.setItem(localStorageKey, token);
+
+      document.cookie = `${refreshTokenCookieName}=${token}`;
 
       await refresh(token);
     }
@@ -87,7 +91,7 @@ export function AuthProvider({
       if (response.status === 401) {
         const text = await response.text();
         setRefreshToken();
-        window.localStorage.removeItem(localStorageKey);
+        document.cookie = `${refreshTokenCookieName}=${token}; expires=${cookieExpireDateString}`;
         return errors.setLoginError(`Invalid refresh token: ${text}`);
       }
     } catch (e) {
@@ -131,7 +135,7 @@ export function AuthProvider({
   };
 
   const logout = () => {
-    window.localStorage.removeItem(localStorageKey);
+    document.cookie = `${refreshTokenCookieName}=${refreshToken}; expires=${cookieExpireDateString}`;
     setRefreshToken(null);
   };
 
@@ -235,7 +239,8 @@ export function AuthProvider({
         refresh,
         logout,
         grant,
-        getUser
+        getUser,
+        existingRefreshToken: getCookie(refreshTokenCookieName)
       }}
     >
       {children}

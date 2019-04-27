@@ -6,10 +6,8 @@ import AdminTools from "../components/AdminTools";
 export default function Token() {
   const auth = useContext(AuthContext);
 
-  const existingRefreshToken = window.localStorage.getItem("ar_refresh_token");
-
-  if (existingRefreshToken && !auth.user) {
-    auth.refresh(existingRefreshToken);
+  if (auth.existingRefreshToken && !auth.user) {
+    auth.refresh(auth.existingRefreshToken);
   }
 
   return auth.user ? (
